@@ -13,14 +13,18 @@ class Upload extends Component {
       files: [],
       uploading: false,
       uploadProgress: {},
-      successfullUploaded: false
+      successfullUploaded: false,
     };
+ 
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
+ 
   }
+
+   goToProcessMode(){ this.props.goToProcessMode();}
 
   onFilesAdded(files) {
     this.setState(prevState => ({
@@ -42,7 +46,12 @@ class Upload extends Component {
       // Not Production ready! Do some error handling here instead...
       this.setState({ successfullUploaded: true, uploading: false });
     }
+
+   
   }
+
+
+
 
   sendRequest(file) {
     return new Promise((resolve, reject) => {
@@ -104,21 +113,30 @@ class Upload extends Component {
   renderActions() {
     if (this.state.successfullUploaded) {
       return (
-        <button
+        <div>
+        <button className="iranSansFont"
           onClick={() =>
             this.setState({ files: [], successfullUploaded: false })
           }
         >
-          Clear
+          انتخاب مجدد
         </button>
+         <button className="iranSansFont"
+         onClick={() =>
+           this.goToProcessMode()
+         }
+       >
+         گام بعدی (انتخاب تحلیل)
+       </button>
+       </div>
       );
     } else {
       return (
-        <button
-          disabled={this.state.files.length < 0 || this.state.uploading}
+        <button className="iranSansFont"
+          disabled={this.state.files.length <= 0 || this.state.uploading}
           onClick={this.uploadFiles}
         >
-          Upload
+          بارگذاری
         </button>
       );
     }
