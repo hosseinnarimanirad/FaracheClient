@@ -1,0 +1,51 @@
+
+.container-fluid {
+    height: 100%;
+}
+
+.shadowPanel {
+    -webkit-box-shadow: 0px 0px 4px 0px rgba(163,163,163,1);
+    -moz-box-shadow: 0px 0px 4px 0px rgba(163,163,163,1);
+    box-shadow: 0px 0px 4px 0px rgba(163,163,163,1);
+}
+
+
+
+.curvePanel {
+    /*background-color: #512DA8;*/
+    /*background-color: #D1C4E9;*/
+    border-radius: 4px;
+    /*color: #512DA8;
+    height: 60px;
+    display: flex;
+    align-items: center;*/
+}
+
+.margin4 {
+    margin: 16px 8px;
+}
+
+.horizontallyCenter {
+    vertical-align: middle;
+}
+
+
+.rightToLeft {
+    direction: rtl !important;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.dragDropPanel{
+    max-width:400px;
+    max-height:400px; 
+    margin:4px auto;
+}
+
+

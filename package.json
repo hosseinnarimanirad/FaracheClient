@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.16.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-drop-zone": "^3.0.6",
     "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "stop": "taskkill -F -IM node.exe"
   },
   "eslintConfig": {
     "extends": "react-app"
