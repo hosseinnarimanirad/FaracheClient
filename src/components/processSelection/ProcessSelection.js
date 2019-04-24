@@ -10,7 +10,7 @@ class ProcessItem extends Component{
         // this.state = {Id:props.item.Id, IsSelected:props.item.IsSelected, Title:props.item.Title}; //props.item;
         this.state = props.item; //props.item;
  
-        this.handleIsCheckChanged=this.handleIsCheckChanged.bind(this);
+        this.handleIsCheckChanged = this.handleIsCheckChanged.bind(this);
     }
 
     
@@ -19,8 +19,6 @@ class ProcessItem extends Component{
             () => {
             this.props.onCheckChanged(e.target.checked);
         });
-
-        
     }
 
     // handleIsCheckChanged(e){
@@ -28,9 +26,11 @@ class ProcessItem extends Component{
     // }
 
     render(){
-        return (<Checkbox style={{fontSize:"15px"}} 
-            className="iranSansFont"  
+        return (        
+        <Checkbox className="iranSansFont"
+            style={{fontSize:"15px"}} 
             checked={this.state.IsSelected}
+            disabled={!this.state.IsEnabled}
             onChange={this.handleIsCheckChanged}>
             {this.state.Title}
         </Checkbox>);
@@ -48,26 +48,44 @@ class ProcessSelection extends Component{
         this.Processes.push(
             {Title:"کشف مدل فرایند (Directed Flow Graph)", 
             Id : 1, 
-            IsSelected : false
+            IsSelected : false,
+            IsEnabled : true
+        });
+
+        this.Processes.push({
+            Title:"کشف مدل فرایند (BPML)", 
+            Id : 2, 
+            IsSelected : false,
+            IsEnabled : false
+        });
+        
+        this.Processes.push({
+            Title:"کشف مدل فرایند (CNET)", 
+            Id : 3, 
+            IsSelected : false,
+            IsEnabled : false
         });
     }
 
     goToNextStep(){
-
+        this.props.goToNextStep();
     }
 
-    updateItem(item, value){
-        item.IsSelected=value;
+    goToPrevStep(){
+        this.props.goToPrevStep();
     }
+    // updateItem(item, value){
+    //     item.IsSelected=value;
+    // }
 
     anyProcessSelected(){
-        this.setState({CanGoToNextStep:false});
+        this.setState(prevState=>({CanGoToNextStep:false}));
 
          for (let index = 0; index < this.Processes.length; index++) {
              const element = this.Processes[index];
              
              if (element.IsSelected) {                 
-                this.setState({CanGoToNextStep:true});
+                this.setState(prevState=>({CanGoToNextStep:true}));
                 return;
              }
          }
@@ -82,39 +100,38 @@ class ProcessSelection extends Component{
                 تحلیل(های) مورد نظر خودت رو انتخاب کن.
             </div>
 
-            {/* <div style={{flow:"Right", display: "flex", flexDirection: "row"}}>
-                {this.Processes.map(p=>
-                    <Checkbox style={{fontSize:"15px"}} 
-                                className="iranSansFont"  
-                                key={p.Id} 
-                                IsSelected={p.IsSelected}
-                                onChange={p.onChange}>
-                            {p.Title}
-                    </Checkbox>)}
-            </div> */}
-
-            <div style={{flow:"Right", display: "flex", flexDirection: "row"}}>
-                {this.Processes.map(p=> <ProcessItem 
-                                            key={p.Id} 
-                                            item={p} 
-                                            onCheckChanged={(e)=>{
-                                                this.updateItem(p,e);
-                                                this.anyProcessSelected();
-                                                }}/>)}
+            <div style={{flow:"Right"}}>
+                {this.Processes.map(p=> 
+                <div className="Row" style={{textAlign:"Right"}} key={p.Id} >
+                    <ProcessItem 
+                        
+                        item={p} 
+                        onCheckChanged={(e)=>{
+                            p.IsSelected = e;
+                            // this.updateItem(p,e);
+                            this.anyProcessSelected();
+                            }}/>
+                </div>)}
             </div>
-
 
             <div style={{
-                float:"Left",
-                marginTop: "30px"
-            }}>
-                <button className="iranSansFont"                    
-                    disabled={!this.state.CanGoToNextStep}
-                    onClick={this.goToNextStep()}                     
-                >
-                انجام تحلیل
-                </button>
+                            float:"Left",
+                            marginTop: "30px"
+                        }}>
+                            <button className="iranSansFont HnrM4"                    
+                                disabled={!this.state.CanGoToNextStep}
+                                onClick={(e)=>{this.goToNextStep();}}                     
+                            >
+                                انجام تحلیل
+                            </button>
+
+                            <button className="iranSansFont HnrM4" 
+                                    onClick={() => this.goToPrevStep()}>
+                                بازگشت
+                            </button>
+
             </div>
+           
         </div>);
     }
 

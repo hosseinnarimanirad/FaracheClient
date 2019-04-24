@@ -95,7 +95,3 @@ button:disabled {
   background: rgb(189, 189, 189);
   cursor: default;
 }
-
-.WordBreak{
-  word-break: break-word;
-}

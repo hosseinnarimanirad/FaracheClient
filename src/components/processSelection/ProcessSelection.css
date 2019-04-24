@@ -4,3 +4,15 @@
     color: #555;
     text-align: right
   }
+
+  
+.Row {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+  

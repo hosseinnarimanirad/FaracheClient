@@ -65,3 +65,8 @@ button {
   color: #fff;
   outline: 0;
 }
+
+
+.WordBreak{
+  word-break: break-word;
+}

@@ -21,10 +21,12 @@ class Upload extends Component {
     this.uploadFiles = this.uploadFiles.bind(this);
     this.sendRequest = this.sendRequest.bind(this);
     this.renderActions = this.renderActions.bind(this);
+
+    this.goToNextStep = this.goToNextStep.bind(this);
  
   }
 
-   goToProcessMode(){ this.props.goToProcessMode();}
+  goToNextStep(){ this.props.goToNextStep();}
 
   onFilesAdded(files) {
     this.setState(prevState => ({
@@ -110,6 +112,7 @@ class Upload extends Component {
     }
   }
 
+  
   renderActions() {
     if (this.state.successfullUploaded) {
       return (
@@ -122,13 +125,11 @@ class Upload extends Component {
             انتخاب مجدد
           </button>
           <button className="iranSansFont HnrM4"
-          onClick={() =>
-            this.goToProcessMode()
-          }
-        >
-          گام بعدی (انتخاب تحلیل)
-        </button>
-       </div>
+                  onClick={() => this.goToNextStep()}
+          >
+            گام بعدی (انتخاب تحلیل)
+          </button>
+        </div>
       );
     } else {
       return (
@@ -163,7 +164,7 @@ class Upload extends Component {
                 </div>
               );
             })}
-          </div>
+          </div>         
         </div>
         <div className="Actions">{this.renderActions()}</div>
       </div>
