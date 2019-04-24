@@ -16,7 +16,8 @@
 }
 
 .Files {
-  margin-left: 32px;
+  /* margin-left: 32px; */
+  margin-right: 32px;
   align-items: flex-start;
   justify-items: flex-start;
   flex: 1;
@@ -95,10 +96,6 @@ button:disabled {
   cursor: default;
 }
 
-.LeftToRight{
-  direction: ltr; 
-}
-
-.RightToLeft{
-  direction: rtl; 
+.WordBreak{
+  word-break: break-word;
 }

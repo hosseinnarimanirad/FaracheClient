@@ -114,25 +114,25 @@ class Upload extends Component {
     if (this.state.successfullUploaded) {
       return (
         <div>
-        <button className="iranSansFont"
+          <button className="iranSansFont HnrM4"
+            onClick={() =>
+              this.setState({ files: [], successfullUploaded: false })
+            }
+          >
+            انتخاب مجدد
+          </button>
+          <button className="iranSansFont HnrM4"
           onClick={() =>
-            this.setState({ files: [], successfullUploaded: false })
+            this.goToProcessMode()
           }
         >
-          انتخاب مجدد
+          گام بعدی (انتخاب تحلیل)
         </button>
-         <button className="iranSansFont"
-         onClick={() =>
-           this.goToProcessMode()
-         }
-       >
-         گام بعدی (انتخاب تحلیل)
-       </button>
        </div>
       );
     } else {
       return (
-        <button className="iranSansFont"
+        <button className="iranSansFont HnrM4"
           disabled={this.state.files.length <= 0 || this.state.uploading}
           onClick={this.uploadFiles}
         >
@@ -158,7 +158,7 @@ class Upload extends Component {
             {this.state.files.map(file => {
               return (
                 <div key={file.name} className="Row LeftToRight">
-                  <span className="Filename">{file.name}</span>
+                  <span className="Filename WordBreak">{file.name}</span>
                   {this.renderProgress(file)}
                 </div>
               );

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import Upload from "./components/upload/Upload";
-import Process from "./components/process/Process"
+// import Process from "./components/process/Process"
+
+import ProcessSelection from './components/processSelection/ProcessSelection'
 
 const steps = ['upload', 'process'];
 
@@ -28,11 +30,13 @@ class App extends Component {
   getUI(){
     switch(this.state.currentStep){
       case steps[0]:{
-        return (<Upload goToProcessMode={()=>this.goToNextStep()}/>);
+
+        return (<ProcessSelection />);
+        // return (<Upload goToProcessMode={()=>this.goToNextStep()}/>);
       }
       case steps[1]:{
 
-        return (<Process />);
+        return (<ProcessSelection />);
       }
       default:{
         return (<Upload/>);
