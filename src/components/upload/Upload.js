@@ -55,42 +55,56 @@ class Upload extends Component {
 
 
 
-  sendRequest(file) {
-    return new Promise((resolve, reject) => {
-      const req = new XMLHttpRequest();
+sendRequest(file) {
+  return new Promise((resolve, reject) => {
+    const req = new XMLHttpRequest();
 
-      req.upload.addEventListener("progress", event => {
-        if (event.lengthComputable) {
-          const copy = { ...this.state.uploadProgress };
-          copy[file.name] = {
-            state: "pending",
-            percentage: (event.loaded / event.total) * 100
-          };
-          this.setState({ uploadProgress: copy });
-        }
-      });
+    //req.setHeader('Access-Control-Allow-Origin', '*');
 
-      req.upload.addEventListener("load", event => {
+    req.upload.addEventListener("progress", event => {
+      if (event.lengthComputable) {
         const copy = { ...this.state.uploadProgress };
-        copy[file.name] = { state: "done", percentage: 100 };
+        copy[file.name] = {
+          state: "pending",
+          percentage: (event.loaded / event.total) * 100
+        };
         this.setState({ uploadProgress: copy });
-        resolve(req.response);
-      });
-
-      req.upload.addEventListener("error", event => {
-        const copy = { ...this.state.uploadProgress };
-        copy[file.name] = { state: "error", percentage: 0 };
-        this.setState({ uploadProgress: copy });
-        reject(req.response);
-      });
-
-      const formData = new FormData();
-      formData.append("file", file, file.name);
-
-      req.open("POST", uploadServerUrl);
-      req.send(formData);
+      }
     });
-  }
+
+    req.upload.addEventListener("load", event => {
+      const copy = { ...this.state.uploadProgress };
+      copy[file.name] = { state: "done", percentage: 100 };
+      this.setState({ uploadProgress: copy });
+      resolve(req.response);
+    });
+
+    req.upload.addEventListener("loadend", event => {
+      var temp = req.responseText;
+      console.log("loadend");
+    });
+
+    req.onreadystatechange = function(){
+      if(req.readyState === XMLHttpRequest.DONE && req.status === 200) {
+        console.log("onreadystatechange");
+            console.log(req.responseText);
+        }
+    }
+
+    req.upload.addEventListener("error", event => {
+      const copy = { ...this.state.uploadProgress };
+      copy[file.name] = { state: "error", percentage: 0 };
+      this.setState({ uploadProgress: copy });
+      reject(req.response);
+    });
+
+    const formData = new FormData();
+    formData.append("file", file, file.name);
+
+    req.open("POST", uploadServerUrl);
+    req.send(formData);
+  });
+}
 
   renderProgress(file) {
     const uploadProgress = this.state.uploadProgress[file.name];
