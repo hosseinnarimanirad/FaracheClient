@@ -3,6 +3,11 @@ import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Progress from "../progress/Progress";
 
+
+//let fs=require('mcrypt');
+
+import CryptographyHelper from '../Common/CryptographyHelper';
+
 const uploadServerUrl = "https://localhost:44306/api/upload";
 
 class Upload extends Component {
@@ -88,6 +93,9 @@ sendRequest(file) {
       if(req.readyState === XMLHttpRequest.DONE && req.status === 200) {
         console.log("onreadystatechange");
             console.log(req.responseText);
+
+           CryptographyHelper.DoEncrypt(JSON.parse(req.responseText));
+            
         }
     }
 
