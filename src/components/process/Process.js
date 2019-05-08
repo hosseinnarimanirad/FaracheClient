@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Process.css";
 import Progress from "../progress/Progress";
+import { Row } from "antd";
+
+import logo from '../../assets/images/processmining.gif'
 
 const serverUrl = "https://localhost:44306/api/ProcessMininig/RunTheProcess";
   
@@ -30,13 +33,6 @@ class Process extends Component {
                 win.document.open();
                 win.document.write(request.responseText);
                 win.document.close();
-                // with(win.document)
-                // {
-                //     open();
-                //     write(data);
-                //     close();
-                // }
-
             }
         };//.bind(this);
 
@@ -49,30 +45,33 @@ class Process extends Component {
  
     }
 
-    render(){
-        return (<div>
-            
+    render() {
+        return (<div  style={{width:"100%"}}> 
+
             <div>
                 PROCESS
             </div>
+            <Row>
 
-            <div style={{
+                <img src={logo} alt="PROCESS MINING" style={{
+                    height: '200px'
+                }} />
+            </Row>
+            <div  style={{
                             float:"Left",
                             marginTop: "30px"
                         }}>
-                <button className="iranSansFont HnrM4" 
-                        onClick={() => this.goToPrevStep()}>
+
+                <button className="iranSansFont HnrM4"
+                    onClick={() => this.goToPrevStep()}>
                     بازگشت
                 </button>
-            </div>
-            <div style={{
-                            float:"Left",
-                            marginTop: "30px"
-                        }}>
-                <button className="iranSansFont HnrM4" 
-                        onClick={() => this.RunProcess()}>
+
+                <button className="iranSansFont HnrM4"
+                    onClick={() => this.RunProcess()}>
                     انجام تحلیل
                 </button>
+
             </div>
 
         </div>);

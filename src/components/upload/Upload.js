@@ -5,7 +5,6 @@ import Progress from "../progress/Progress";
 
 
 //let fs=require('mcrypt');
-
 import CryptographyHelper from '../Common/CryptographyHelper';
 
 const uploadServerUrl = "https://localhost:44306/api/upload";
@@ -172,6 +171,7 @@ sendRequest(file) {
   render() {
     return (
       <div className="Upload" >
+       
         <span className="Title iranSansFont">فایل خود را بارگذاری کنید</span>
         <div className="Content">
           <div>
