@@ -19,6 +19,7 @@ class Upload extends Component {
       uploading: false,
       uploadProgress: {},
       successfullUploaded: false,
+      info:{}
     };
  
 
@@ -31,7 +32,7 @@ class Upload extends Component {
  
   }
 
-  goToNextStep(){ this.props.goToNextStep();}
+  goToNextStep(){ this.props.goToNextStep(this.state.info);}
 
   onFilesAdded(files) {
     this.setState(prevState => ({
@@ -94,10 +95,13 @@ sendRequest(file) {
         console.log("onreadystatechange");
             console.log(req.responseText);
 
-           CryptographyHelper.DoEncrypt(JSON.parse(req.responseText));
+            var theInfo = JSON.parse(CryptographyHelper.DoDecrypt(JSON.parse(req.responseText)));
+
+            this.setState((prevState)=>({info :  theInfo} ));
             
+            var temp = this.state;
         }
-    }
+    }.bind(this);
 
     req.upload.addEventListener("error", event => {
       const copy = { ...this.state.uploadProgress };

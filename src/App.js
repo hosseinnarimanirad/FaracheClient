@@ -15,7 +15,8 @@ class App extends Component {
     this.state = {    
 
       currentStep: steps[0],
-      currentStepIndex: 0      
+      currentStepIndex: 0,  
+      info :null, 
     };
 
     this.goToNextStep = this.goToNextStep.bind(this);
@@ -47,16 +48,32 @@ class App extends Component {
     }));
   }
 
+  updateFileId(uploadFileId){
+    this.setState((prevState) => ({ info: { uploadFileId : uploadFileId  }}));
+  }
+
+  updateProcess(process){
+    this.setState((prevState)=>({info: {...prevState.info,process:process}}));     
+  }
+
   getUI(){
     switch(this.state.currentStep){
       case steps[0]:{ 
-        return (<Upload goToNextStep={()=>this.goToNextStep()}/>);
+        return (<Upload goToNextStep={(fileId) => {
+          this.updateFileId(fileId);
+          this.goToNextStep();} }
+          />);
       }
       case steps[1]:{
-        return (<ProcessSelection goToNextStep={()=>this.goToNextStep()} goToPrevStep={()=>this.goToPrevStep()}/>);
+        return (<ProcessSelection 
+                  goToNextStep={(process)=>{
+                    this.updateProcess(process);
+                    this.goToNextStep();
+                  }} 
+                  goToPrevStep={()=>this.goToPrevStep()}/>);
       }
       case steps[2]:{
-        return (<Process goToPrevStep={()=>this.goToPrevStep()}/>);
+        return (<Process info={this.state.info} goToPrevStep={()=>this.goToPrevStep()}/>);
       }
       default:{
         return (<Upload/>);

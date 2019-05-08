@@ -3,14 +3,50 @@ import Dropzone from "../dropzone/Dropzone";
 import "./Process.css";
 import Progress from "../progress/Progress";
 
-const uploadServerUrl = "https://localhost:44306/api/upload";
-
+const serverUrl = "https://localhost:44306/api/ProcessMininig/RunTheProcess";
+  
 class Process extends Component {
-
-     
+    constructor(props){
+        super(props);
+        this.state =    {info:props.info};
+    }
+    
  
     goToPrevStep(){
         this.props.goToPrevStep();
+    }
+
+    RunProcess(){
+ 
+        const request = new XMLHttpRequest();
+ 
+        request.onreadystatechange = function () {
+            if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
+                console.log("onreadystatechange");
+
+                //show the html response (vizNetwork diagram) in a new tab
+                var win= window.open('about:blank');
+               
+                win.document.open();
+                win.document.write(request.responseText);
+                win.document.close();
+                // with(win.document)
+                // {
+                //     open();
+                //     write(data);
+                //     close();
+                // }
+
+            }
+        };//.bind(this);
+
+
+        request.open("POST", serverUrl);
+
+        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        request.send(JSON.stringify({ fileId: this.state.info.uploadFileId.Stamp, processMode: this.state.info.process.Title }));
+ 
     }
 
     render(){
@@ -24,13 +60,20 @@ class Process extends Component {
                             float:"Left",
                             marginTop: "30px"
                         }}>
-                            <button className="iranSansFont HnrM4" 
-                                    onClick={() => this.goToPrevStep()}>
-                                بازگشت
-                            </button>
-
+                <button className="iranSansFont HnrM4" 
+                        onClick={() => this.goToPrevStep()}>
+                    بازگشت
+                </button>
             </div>
-
+            <div style={{
+                            float:"Left",
+                            marginTop: "30px"
+                        }}>
+                <button className="iranSansFont HnrM4" 
+                        onClick={() => this.RunProcess()}>
+                    انجام تحلیل
+                </button>
+            </div>
 
         </div>);
     }

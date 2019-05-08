@@ -43,7 +43,7 @@ class ProcessSelection extends Component{
     
         this.Processes = [];
   
-        this.state={CanGoToNextStep:false};
+        this.state={CanGoToNextStep:false, CurrentSelectedProcess : null};
 
         this.Processes.push(
             {Title:"کشف مدل فرایند (Directed Flow Graph)", 
@@ -68,7 +68,7 @@ class ProcessSelection extends Component{
     }
 
     goToNextStep(){
-        this.props.goToNextStep();
+        this.props.goToNextStep(this.state.CurrentSelectedProcess);
     }
 
     goToPrevStep(){
@@ -93,6 +93,16 @@ class ProcessSelection extends Component{
         //  return false;
     }
 
+    itemSelectedChanged(process, isSelected){
+        process.IsSelected = isSelected;
+        // this.updateItem(p,e);
+        this.anyProcessSelected();
+
+        if (process.IsSelected){
+            this.setState((prevState)=> ({CurrentSelectedProcess : process}));
+        }
+    }
+
     render(){
         return (<div style={{width:"100%"}}>
 
@@ -106,18 +116,28 @@ class ProcessSelection extends Component{
                     <ProcessItem 
                         
                         item={p} 
-                        onCheckChanged={(e)=>{
-                            p.IsSelected = e;
-                            // this.updateItem(p,e);
-                            this.anyProcessSelected();
-                            }}/>
+                        onCheckChanged={(e)=>
+                            {
+                            // p.IsSelected = e; 
+                            // this.anyProcessSelected();
+                            this.itemSelectedChanged(p,e);
+                                }
+                            }/>
                 </div>)}
             </div>
+
+
+           
 
             <div style={{
                             float:"Left",
                             marginTop: "30px"
                         }}>
+                         <button className="iranSansFont HnrM4" 
+                                    onClick={() => this.goToPrevStep()}>
+                                بازگشت
+                            </button>
+                            
                             <button className="iranSansFont HnrM4"                    
                                 disabled={!this.state.CanGoToNextStep}
                                 onClick={(e)=>{this.goToNextStep();}}                     
@@ -125,10 +145,6 @@ class ProcessSelection extends Component{
                                 انجام تحلیل
                             </button>
 
-                            <button className="iranSansFont HnrM4" 
-                                    onClick={() => this.goToPrevStep()}>
-                                بازگشت
-                            </button>
 
             </div>
            
